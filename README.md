@@ -1,107 +1,88 @@
-# Real-life-application-leve project-using-Pandas-numpy-Matplotlib-1
 
-Project Title: Exploratory Data Analysis on Netflix Movies and TV Shows
-
-Objective:
-
-Analyze Netflix’s content library to explore trends in genres, countries, release years, and content ratings. This helps understand how Netflix's content has evolved over time and what types of content dominate the platform.
+Got it — here's a simple but practical project idea that still uses Pandas, NumPy, and Matplotlib:
 
 
 ---
 
-Tools & Libraries:
+Project Title:
 
-Pandas – for data wrangling
+"Netflix Movies & TV Shows EDA"
 
-NumPy – for numerical operations
 
-Matplotlib & Seaborn – for data visualization
+---
+
+Overview:
+
+Perform exploratory data analysis on Netflix's public dataset to understand trends in content types, genres, countries, and release years.
+
+
+---
+
+Dataset:
+
+Netflix Titles Dataset (Kaggle)
 
 
 
 ---
 
-Dataset Source:
+What You'll Analyze:
 
-Use the Netflix dataset from Kaggle:
-Netflix Movies and TV Shows
-
-
----
-
-Key EDA Tasks:
-
-1. Data Cleaning:
-
-Handle missing values (especially in director/cast columns)
-
-Convert dates to datetime format
-
-Split and standardize genre lists
+1. Number of movies vs. TV shows
 
 
-
-2. Data Exploration:
-
-Total number of shows/movies added per year
-
-Top genres on Netflix (bar chart)
-
-Content rating distribution (pie chart)
-
-Country-wise content count (map or bar chart)
-
-Most common actors/directors
+2. Most common genres
 
 
-
-3. Visualizations:
-
-Timeline of content added
-
-Heatmap of content type vs rating
-
-Word clouds for genres or titles (optional)
-
-Histograms of duration and release year
+3. Content trends over the years
 
 
+4. Countries producing most content
 
-4. Bonus Ideas:
 
-Compare trends between TV Shows and Movies
-
-Identify the best time of year Netflix adds the most content
-
-Create a recommendation trend tracker (simple analysis)
-
+5. Average duration of movies and shows
 
 
 
 
 ---
 
-GitHub Folder Structure:
 
-netflix-eda/
-│
-├── data/
-├── notebooks/
-│   └── netflix_eda.ipynb
-├── images/
-├── README.md
-├── requirements.txt
-└── .gitignore
+Clean and small dataset (around 8K rows)
+
+Easy date and category filtering
+
+No complex calculations needed
+
 
 
 ---
 
-README.md Highlights:
+Basic Analysis Ideas:
 
-Project Summary
+import pandas as pd
+import matplotlib.pyplot as plt
 
-Key Visualizations (embed images)
+df = pd.read_csv('netflix_titles.csv')
 
-Insights about genres, countries, years, etc.
+# Check basic info
+print(df.head())
+print(df['type'].value_counts())
 
-Instructions to run the notebook
+# Bar plot: Movies vs TV Shows
+df['type'].value_counts().plot(kind='bar', title='Content Type Distribution')
+plt.show()
+
+# Top 10 genres
+df['listed_in'].str.split(', ', expand=True).stack().value_counts().head(10).plot(kind='barh', title='Top 10 Genres')
+plt.show()
+
+# Content added by year
+df['date_added'] = pd.to_datetime(df['date_added'])
+df['year_added'] = df['date_added'].dt.year
+df['year_added'].value_counts().sort_index().plot(kind='line', marker='o', title='Content Added Over Years')
+plt.show()
+
+
+
+
